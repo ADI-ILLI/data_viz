@@ -1,18 +1,70 @@
-<!DOCTYPE html>
-<html>
-<head>
-<!-- HTML Codes by Quackit.com -->
-<title>
-Professor</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-body {background-color:#ffffff;background-repeat:no-repeat;background-position:top left;background-attachment:fixed;}
-h1{font-family:Arial, sans-serif;color:#000000;background-color:#ffffff;}
-p {font-family:Georgia, serif;font-size:14px;font-style:normal;font-weight:normal;color:#000000;background-color:#ffffff;}
-</style>
-</head>
-<body>
-<h1>aaaaa</h1>
-<p>Henlo</p>
-</body>
+<html lang='en'>
+    <head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"?
+		<title> Document </title>
+        <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+        <title>This is Aditya homepage.</title>
+    </head>
+    <body>
+        <p>
+            This is a vizualization.
+        </p>
+        <p>
+            This is some more text.
+        </p>
+        <div id="myviz">
+        </div>
+    </body>
+    <script>
+        mySpec = {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {
+    "url": "https://raw.githubusercontent.com/ADI-ILLI/data_viz/main/building_inventory.csv"
+  },
+  "hconcat": [
+    {
+      "transform": [
+        {
+          "filter": {
+            "and": [
+              {"field": "Year Acquired", "range": [1750,2050]},
+              {"field": "Year Constructed", "range": [1750,2050]},
+              {"field": "Square Footage", "gt": 0}
+            ]
+          }
+        }
+      ],
+      "mark": "point",
+      "encoding": {
+        "x": {
+          "field": "Year Acquired",
+          "type": "quantitative",
+          "scale": {"domain": [1750, 2100]}
+        },
+        "y": {
+          "field": "Year Constructed",
+          "type": "quantitative",
+          "scale": {"domain": [1750, 2100]}
+        }
+      }
+    },
+    {
+      "mark": "bar",
+      "params": [{"name": "source_0", "select": {"type": "interval"}}],
+      "encoding": {
+        "y": {"field": "Year Constructed", "type": "quantitative"},
+        "x": {"field": "City", "type": "ordinal"},
+        "color": {
+          "value": "blue",
+          "condition": {"param": "source_0", "value": "orange"}
+        }
+      }
+    }
+  ]
+};
+        vegaEmbed('#myviz', mySpec);
+    </script>
 </html>
