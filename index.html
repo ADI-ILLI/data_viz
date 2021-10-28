@@ -20,18 +20,21 @@
     </body>
     <script>
         mySpec = {
+ {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "data": {
     "url": "https://raw.githubusercontent.com/ADI-ILLI/data_viz/main/building_inventory.csv"
   },
   "hconcat": [
     {
+      "title": {"text": "Year Acquired vs Year Constructed"},
       "transform": [
+        {"filter": {"param": "source_0"}},
         {
           "filter": {
             "and": [
-              {"field": "Year Acquired", "range": [1750,2050]},
-              {"field": "Year Constructed", "range": [1750,2050]},
+              {"field": "Year Acquired", "range": [1750, 2050]},
+              {"field": "Year Constructed", "range": [1750, 2050]},
               {"field": "Square Footage", "gt": 0}
             ]
           }
@@ -52,14 +55,15 @@
       }
     },
     {
+      "title": {"text": "Square Footage vs Year Acquired"},
       "mark": "bar",
       "params": [{"name": "source_0", "select": {"type": "interval"}}],
       "encoding": {
-        "y": {"field": "Year Constructed", "type": "quantitative"},
-        "x": {"field": "City", "type": "ordinal"},
+        "y": {"field": "Square Footage", "type": "quantitative"},
+        "x": {"field": "Year Acquired", "type": "quantitative"},
         "color": {
-          "value": "blue",
-          "condition": {"param": "source_0", "value": "orange"}
+          "value": "orange",
+          "condition": {"param": "source_0", "value": "grey"}
         }
       }
     }
