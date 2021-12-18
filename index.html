@@ -1,0 +1,63 @@
+ <!DOCTYPE html>
+<html>
+<body>
+
+<h1>My First Heading</h1>
+<p>My first paragraph.</p>
+
+</body>
+ 
+<script>
+        mySpec = 
+ {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {
+    "url": "https://raw.githubusercontent.com/ADI-ILLI/data_viz/main/building_inventory.csv"
+  },
+  "hconcat": [
+    {
+      "title": {"text": "Year Acquired vs Year Constructed"},
+      "transform": [
+        {"filter": {"param": "source_0"}},
+        {
+          "filter": {
+            "and": [
+              {"field": "Year Acquired", "range": [1750, 2050]},
+              {"field": "Year Constructed", "range": [1750, 2050]},
+              {"field": "Square Footage", "gt": 0}
+            ]
+          }
+        }
+      ],
+      "mark": "point",
+      "encoding": {
+        "x": {
+          "field": "Year Acquired",
+          "type": "quantitative",
+          "scale": {"domain": [1750, 2100]}
+        },
+        "y": {
+          "field": "Year Constructed",
+          "type": "quantitative",
+          "scale": {"domain": [1750, 2100]}
+        }
+      }
+    },
+    {
+      "title": {"text": "Square Footage vs Year Acquired"},
+      "mark": "bar",
+      "params": [{"name": "source_0", "select": {"type": "interval"}}],
+      "encoding": {
+        "y": {"field": "Square Footage", "type": "quantitative"},
+        "x": {"field": "Year Acquired", "type": "quantitative"},
+        "color": {
+          "value": "orange",
+          "condition": {"param": "source_0", "value": "grey"}
+        }
+      }
+    }
+  ]
+};
+        vegaEmbed('#myviz', mySpec);
+    </script>
+</html>
